@@ -1,21 +1,23 @@
 from config import *
 
 class Simulation:
-    def __init__(self, income_timeline, living_timeline) -> None:
+    def __init__(self, current_age, current_year, savings, retirement, income_timeline, living_timeline, stopping_age=ENDING_AGE) -> None:
+        # Current details
+        self.current_age = current_age
+        self.current_year = current_year
+        self.stopping_age = stopping_age
+        self.current_city = None
+        self.current_job = None
+
+        # Investments
         self.savings = 0
         self.retirement_savings = 0
         self.investment_properties = []
 
+        # Timelines
         self.income_timeline = income_timeline
         self.living_timeline = living_timeline
 
-        self.current_age = CURRENT_AGE
-        self.current_year = CURRENT_YEAR
-
-        self.current_city = None # somthing
-
-        self.current_income = 0
-        self.current_living_situation = None
         # maybe break this down by city also with different bonuses
         
     def set_annual_income(self):
