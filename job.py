@@ -1,3 +1,21 @@
+class Compensation:
+    def __init__(self, base, stock, bonus) -> None:
+        self.base = base
+        self.stock = stock
+        self.bonus = bonus
+
+    @property
+    def base(self):
+        return self.base
+    
+    @property
+    def stock(self):
+        return self.stock
+    
+    @property
+    def bonus(self):
+        return self.bonus
+
 class Job:
     def __init__(self, title, company, start_date, end_date, annual_salary, bonus_structure, benefits, retirement_plan):
         self.title = title
@@ -9,6 +27,8 @@ class Job:
         self.benefits = benefits  # Such as health insurance, stock options, etc.
         self.retirement_plan = retirement_plan  # 401(k) contribution details, pension plans, etc.
 
+        self.compensation_timeline = compensation_timeline
+
     def update_salary(self):
         pass
     
@@ -17,4 +37,8 @@ class Job:
         pass
 
     def calculate_bonuses(self):
+        pass
+
+class Business:
+    def __init__(self) -> None:
         pass

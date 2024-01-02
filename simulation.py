@@ -50,6 +50,15 @@ class Simulation:
     def calculate_income(self):
         self.monthly_income = 0
 
+        # Job income
+
+        # Property income
+        for prop in self.properties:
+            self.monthly_income += prop.get_monthly_income()
+
+        # Investment income
+        # TODO
+
         self.annual_income = self.monthly_income * 12
 
     def calculate_expenses(self):

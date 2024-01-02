@@ -13,6 +13,7 @@ class Property:
         self.purchase_price = purchase_price
         self.mortgage_rate = mortgage_rate
         self.mortgage_term = mortgage_term
+        self.outstanding_morgage_balance = 0 #TODO: Fix
         self.rental_income = rental_income
         self.monthly_rent = monthly_rent
         self.city = city
@@ -40,6 +41,7 @@ class Property:
             return self.rental_income
         else:
             return 0
+        
     @property
     def is_living(self):
         return self.is_living
