@@ -11,15 +11,33 @@ class Simulation:
 
         # Investments
         self.savings = 0
+        self.emergency_fund = 0
         self.retirement_savings = 0
-        self.investment_properties = []
+        self.properties = []
 
-        # Timelines
-        self.income_timeline = income_timeline
-        self.living_timeline = living_timeline
+        # Life events & timelines
+        self.job_timeline = self.sort_timeline(job_timeline)
+        self.property_timeline = self.sort_timeline(property_timeline)
+        # TODO: add more events like marraige, kids, vacation, etc...
+        # buying a car for example
+        # getting married
+        # Having to pay monthly for my parent's and their retirement
 
         # maybe break this down by city also with different bonuses
+
+    def sort_timeline(self, timeline):
+        # TODO: check correctness
+        return sorted(timeline.items(), key=lambda x: x[0])
+
+    def update_life(self):
+        # Updates based on timelines
         
+
+
+        # updates portfolios, morgagaes, everything based on how your life has updated
+        
+        pass
+
     def set_annual_income(self):
         # TODO: check correctness
         sorted_timeline = sorted(self.income_timeline.items(), key=lambda x: x[0], reverse=True)
@@ -43,24 +61,32 @@ class Simulation:
         # retrive from city(s)
         pass
 
+    def calculate_assets(self):
+        pass
+
     def run_year(self):
         while self.current_age < ENDING_AGE:
-            self.set_annual_income()
-            self.set_living_situation()
+            self.update_life()
 
+            # get all your incomes
+            self.get_annual_expenses()
+            self.get_annual_income() # post tax
 
-
-
-
+            # do youre math on how much you are making, how much you are spending
             monthly_leftover = 0
             annual_leftover = monthly_leftover * 12
 
             # invest what you can
+            # investing simulations
+            # see how you can maximize this
+
+            self.print_statistics()
 
             self.current_age += 1
             self.current_year += 1
 
     def print_statistics(self):
+        # maybe have some print options to print every major year (25, 30, 35, 40, etc...)
         pass
         
 """

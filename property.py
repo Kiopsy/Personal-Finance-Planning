@@ -17,6 +17,7 @@ class Property:
         self.monthly_rent = monthly_rent
         self.city = city
         self.mortgage_payment = self.calculate_mortgage_payment()
+        self.living = False
 
     def calculate_mortgage_payment(self):
         # Only calculate mortgage payment if it's a property you own
