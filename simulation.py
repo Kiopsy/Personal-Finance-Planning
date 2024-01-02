@@ -8,6 +8,13 @@ class Simulation:
         self.stopping_age = stopping_age
         self.current_city = None
         self.current_job = None
+        self.living_property = None
+
+        # Expenses / income
+        self.monthly_income = 0
+        self.monthly_expenses = 0
+        self.annual_income = 0
+        self.annual_expenses = 0
 
         # Investments
         self.savings = 0
@@ -16,8 +23,9 @@ class Simulation:
         self.properties = []
 
         # Life events & timelines
-        self.job_timeline = self.sort_timeline(job_timeline)
-        self.property_timeline = self.sort_timeline(property_timeline)
+        self.job_timeline = job_timeline
+        self.property_timeline = property_timeline
+
         # TODO: add more events like marraige, kids, vacation, etc...
         # buying a car for example
         # getting married
@@ -25,43 +33,56 @@ class Simulation:
 
         # maybe break this down by city also with different bonuses
 
-    def sort_timeline(self, timeline):
-        # TODO: check correctness
-        return sorted(timeline.items(), key=lambda x: x[0])
 
     def update_life(self):
         # Updates based on timelines
+        self.current_job = self.job_timeline.get_current(self.current_year).pop()
+
+        self.properties = self.property_timeline.get_current(self.current_year)
+        self.living_property = next((prop for prop in self.properties if prop.is_living), None)
+        if self.living_property == None:
+            raise ValueError("Not living in any properties.")
+        self.current_city = self.living_property.city
         
-
-
         # updates portfolios, morgagaes, everything based on how your life has updated
-        
-        pass
+        # TODO
 
-    def set_annual_income(self):
-        # TODO: check correctness
-        sorted_timeline = sorted(self.income_timeline.items(), key=lambda x: x[0], reverse=True)
-        for year, income in sorted_timeline:
-            if year <= self.current_year:
-                self.current_income = income
-                break
+    def calculate_income(self):
+        self.monthly_income = 0
 
-    def set_living_situation(self):
-        # TODO: check correctness
-        sorted_timeline = sorted(self.living_timeline.items(), key=lambda x: x[0], reverse=True)
-        for year, living_situation in sorted_timeline:
-            if year <= self.current_year:
-                self.current_living_situation = living_situation
-                break
+        self.annual_income = self.monthly_income * 12
 
-    def get_annual_expenses(self):
-        pass
+    def calculate_expenses(self):
+        self.monthly_expenses = 0
+        # Living expenses
+
+
+    
+        # Property expenses
+        for prop in self.properties:
+            self.monthly_expenses += prop.get_monthly_expense()
+
+        self.annual_expenses = self.monthly_expenses * 12
 
     def estimate_taxes(self):
         # retrive from city(s)
         pass
 
+    """
+    Asset - Home Equity: The part of the house that you "own" is your equity in
+    the home. This is considered an asset. Home equity is calculated as the current
+    market value of the house minus the outstanding mortgage balance. For example,
+    if your house is worth $300,000 and you owe $200,000 on your mortgage, your
+    equity in the house is $100,000.
+
+    Liability - Mortgage: The remaining balance on your mortgage is a liability.
+    Continuing the above example, the $200,000 you still owe on the mortgage is
+    a liability.
+    """
     def calculate_assets(self):
+        pass
+
+    def calculate_liabilities(self):
         pass
 
     def run_year(self):
@@ -69,8 +90,8 @@ class Simulation:
             self.update_life()
 
             # get all your incomes
-            self.get_annual_expenses()
-            self.get_annual_income() # post tax
+            self.calculate_expenses()
+            self.calculate_income() # post tax
 
             # do youre math on how much you are making, how much you are spending
             monthly_leftover = 0
@@ -90,11 +111,6 @@ class Simulation:
         pass
         
 """
-Structure:
-- different income streams
-    - different rates
-    - different money making strategies
-
 - want to do a what if report?
     - calculate things in reverse
 """
